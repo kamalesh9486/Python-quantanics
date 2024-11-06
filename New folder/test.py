@@ -153,129 +153,69 @@ class Machine():
                     if flag == 0:
                         break
 
-            # if event_state.get_event_state("EJECT_STATUS") == True:
-            #     flag = 0
-            #     ct = datetime.now()
-            #     ct = ct.strftime("%Y-%m-%d %H:%M:%S")
-            #     while True:
-            #         if(flag == 1):
-            #             while True:
-            #                 if(my_test_data['ejection_status'] == False):
-            #                     flag = 0
-            #                     break
-            #                 elif(my_test_data['power_status'] == True): # This will only execute in case of Machine OFF after Inactive state
-            #                     flag = 0
-            #                     break
+            if event_state.get_event_state("EJECT_STATUS") == True:
+                flag = 0
+                ct = datetime.now()
+                ct = ct.strftime("%Y-%m-%d %H:%M:%S")
+                while True:
+                    if flag == 1:
+                        while True:
+                            if my_test_data['ejection_status'] == False:
+                                flag = 0
+                                break
+                            elif my_test_data['power_status'] == True:  # Machine OFF after Inactive state
+                                flag = 0
+                                break
 
-            #         if(flag == 0):
-            #             state = my_test_data['ejection_status']
-            #             for x in range(self.total_duration):
-            #                 state  = my_test_data['ejection_status']
+                    if flag == 0:
+                        state = my_test_data['ejection_status']
+                        for x in range(self.total_duration):
+                            state = my_test_data['ejection_status']
 
-            #                 if state == False:
-            #                     event_state.update_event_state({"EJECT_STATUS": False})
-            #                     c_event = "Active"
-            #                     p_event = c_event
-            #                     event_state.update_data_state({
-            #                         "id": int(time.time()),
-            #                         "machine_status": True,
-            #                         "downtime_status": False,
-            #                         "status": event_state.get_lable_state("ACTIVE"),
-            #                         "shot_status": 1,
-            #                         "machine_id":self.get_id(),
-            #                         "gateway_time":ct,
-            #                     })
-            #                     #BLL.publish_event(event_state.get_data_state(), "test/new/events")
-            #                     #print("Ejection ON")
-            #                     logger.info(f"PIN Status for Machine {self.get_id()} Ejection ON")
-            #                     logger.info(f"Event Status for Machine {self.get_id()} Active")
+                            if state == False:
+                                # Cycle restart logic: set `CYCLE_START_STATUS` to True and proceed with the next cycle
+                                event_state.update_event_state({"EJECT_STATUS": False})
+                                event_state.update_event_state({"CYCLE_START_STATUS": True})
+                                c_event = "Active"
+                                p_event = c_event
+                                event_state.update_data_state({
+                                    "id": int(time.time()),
+                                    "machine_status": True,
+                                    "downtime_status": False,
+                                    "status": event_state.get_lable_state("ACTIVE"),
+                                    "shot_status": 1,
+                                    "machine_id": self.get_id(),
+                                    "gateway_time": ct,
+                                })
+                                # Log active state and restart information
+                                logger.info(f"PIN Status for Machine {self.get_id()} Ejection ON")
+                                logger.info(f"Event Status for Machine {self.get_id()} Active")
+                                logger.info(f"Cycle restart triggered after 'Inactive' status for Machine {self.get_id()}")
+                                break
 
-            #                     ct = datetime.now()
-            #                     ct = ct.strftime("%Y-%m-%d %H:%M:%S")
-            #                     temp_e = False
-            #                     for x in range(self.total_duration): # For Inactive Case, After Ejection // 60 times loopexecute 
-            #                         if my_test_data['mold_status'] == True or my_test_data['cycle_start_status'] == True:
-            #                             temp_e = True
-            #                             break
-            #                         elif(my_test_data['power_status'] == True):
-            #                             state = False
-            #                             temp_e = True
-            #                             flag = 0
-            #                             break
-            #                         time.sleep(self.delay_s) # delay1 second
+                            # Handling for inactive state if state remains True
+                            if state == True:
+                                c_event = "Inactive"
+                                p_event = c_event
+                                flag = 1
+                                event_state.update_data_state({
+                                    "id": int(time.time()),
+                                    "machine_status": True,
+                                    "downtime_status": True,
+                                    "status": event_state.get_lable_state("INACTIVE"),
+                                    "shot_status": 0,
+                                    "machine_id": self.get_id(),
+                                    "gateway_time": ct,
+                                })
+                                # Log inactive state and reset cycle
+                                logger.info(f"Event Status for Machine {self.get_id()} Inactive detected; resetting cycle.")
+                                # Break to allow the main loop to restart from 'CYCLE_START_STATUS'
+                                break
 
-            #                     if temp_e == False:
-            #                         c_event = "Inactive"
-            #                         p_event = c_event
-            #                         event_state.update_data_state({
-            #                             "id":int(time.time()),
-            #                             "machine_status": True,
-            #                             "downtime_status": True,
-            #                             "status": event_state.get_lable_state("INACTIVE"),
-            #                             "shot_status": 0,
-            #                             "machine_id":self.get_id(),
-            #                             "gateway_time":ct,
-            #                         })
-            #                         #BLL.publish_event(event_state.get_data_state(), "test/new/events")
-            #                         #print("Inactive")
-            #                         logger.info(f"Event Status for Machine {self.get_id()} Inactivek")
+                        if flag == 0:
+                            break
 
-            #                     while(temp_e == False): # For long duration High Signal
-            #                         if my_test_data['mold_status'] == True or my_test_data['cycle_start_status'] == True:
-            #                             break
-            #                         elif(my_test_data['power_status'] == True):
-            #                             state = False
-            #                             flag = 0
-            #                             break
-            #                         time.sleep(0.5)
-            #                     break
-            #                 elif(my_test_data['power_status'] == True):
-            #                     state = False
-            #                     flag = 0
-            #                     break
-            #                 elif(my_test_data['mold_status'] == True): #For Without Eject Mold Scenario
-            #                     event_state.update_event_state({"EJECT_STATUS": False})
-            #                     c_event = "Active"
-            #                     p_event = c_event
-            #                     event_state.update_data_state({
-            #                         "id": int(time.time()),
-            #                         "machine_status": True,
-            #                         "downtime_status": False,
-            #                         "status": event_state.get_lable_state("ACTIVE"),
-            #                         "shot_status": 1,
-            #                         "machine_id":self.get_id(),
-            #                         "gateway_time":ct,
-            #                     })
-            #                     #BLL.publish_event(event_state.get_data_state(), "test/new/events")
-            #                     #print("Ejection ON(Without Ejection)")
-            #                     logger.info(f"PIN Status for Machine {self.get_id()} Ejection ON(Without Ejection)")
-            #                     logger.info(f"Event Status for Machine {self.get_id()} Active")
-            #                     state = False
-            #                     flag = 0
-            #                     break
-
-
-            #                 time.sleep(self.delay_s)
-            #             if state == True:
-            #                 c_event = "Inactive"
-            #                 p_event = c_event
-            #                 flag = 1
-            #                 event_state.update_data_state({
-            #                     "id": int(time.time()),
-            #                     "machine_status": True,
-            #                     "downtime_status": True,
-            #                     "status": event_state.get_lable_state("INACTIVE"),
-            #                     "shot_status": 0,
-            #                     "machine_id":self.get_id(),
-            #                     "gateway_time":ct,
-            #                 })
-            #                 #BLL.publish_event(event_state.get_data_state(), "test/new/events")
-            #                 #print("Inactive")
-            #                 logger.info(f"Event Status for Machine {self.get_id()} Inactivel")
-            #         if flag == 0:
-            #             break
-
-            # time.sleep(0.5)
+                        time.sleep(0.5)
         
         return
 
