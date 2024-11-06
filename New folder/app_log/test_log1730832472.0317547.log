@@ -1,0 +1,43 @@
+2024-11-06 00:32:52,045 Machine 1 initialized with pins: {'MACHINE_POWER_PIN': 23, 'MOLD_CLOSE_PIN': 4, 'EJECT_PIN': 17, 'CYCLE_START_PIN': 18}
+2024-11-06 00:32:52,046 PIN Status for Machine 1 Power ON
+2024-11-06 00:32:52,047 Monitoring thread for Machine 1 started.
+2024-11-06 00:32:52,047 PIN Status for Machine 1 Cycle Start ON
+2024-11-06 00:32:52,047 Machine 2 initialized with pins: {'MACHINE_POWER_PIN': 27, 'MOLD_CLOSE_PIN': 10, 'EJECT_PIN': 9, 'CYCLE_START_PIN': 22}
+2024-11-06 00:32:52,047 PIN Status for Machine 1 Mold Close ON
+2024-11-06 00:32:52,048 PIN Status for Machine 2 Power ON
+2024-11-06 00:32:52,048 PIN Status for Machine 1 Ejection ON
+2024-11-06 00:32:52,048 Monitoring thread for Machine 2 started.
+2024-11-06 00:32:52,048 PIN Status for Machine 2 Cycle Start ON
+2024-11-06 00:32:52,048 Event Status for Machine 1 Active
+2024-11-06 00:32:52,049 Machine 3 initialized with pins: {'MACHINE_POWER_PIN': 11, 'MOLD_CLOSE_PIN': 5, 'EJECT_PIN': 6, 'CYCLE_START_PIN': 0}
+2024-11-06 00:32:52,049 PIN Status for Machine 2 Mold Close ON
+2024-11-06 00:32:52,049 PIN Status for Machine 3 Power ON
+2024-11-06 00:32:52,050 Monitoring thread for Machine 3 started.
+2024-11-06 00:32:52,050 PIN Status for Machine 3 Cycle Start ON
+2024-11-06 00:32:52,050 Machine 4 initialized with pins: {'MACHINE_POWER_PIN': 13, 'MOLD_CLOSE_PIN': 26, 'EJECT_PIN': 19, 'CYCLE_START_PIN': 21}
+2024-11-06 00:32:52,050 PIN Status for Machine 3 Mold Close ON
+2024-11-06 00:32:52,050 PIN Status for Machine 4 Power ON
+2024-11-06 00:32:52,050 Monitoring thread for Machine 4 started.
+2024-11-06 00:32:52,050 PIN Status for Machine 4 Cycle Start ON
+2024-11-06 00:32:52,051 Machine 5 initialized with pins: {'MACHINE_POWER_PIN': 20, 'MOLD_CLOSE_PIN': 1, 'EJECT_PIN': 12, 'CYCLE_START_PIN': 16}
+2024-11-06 00:32:52,051 PIN Status for Machine 4 Mold Close ON
+2024-11-06 00:32:52,051 PIN Status for Machine 4 Ejection ON
+2024-11-06 00:32:52,051 PIN Status for Machine 5 Power ON
+2024-11-06 00:32:52,051 Event Status for Machine 4 Active
+2024-11-06 00:32:52,051 Monitoring thread for Machine 5 started.
+2024-11-06 00:32:52,051 PIN Status for Machine 5 Cycle Start ON
+2024-11-06 00:32:52,052 Machine 6 initialized with pins: {'MACHINE_POWER_PIN': 7, 'MOLD_CLOSE_PIN': 25, 'EJECT_PIN': 24, 'CYCLE_START_PIN': 8}
+2024-11-06 00:32:52,052 PIN Status for Machine 5 Mold Close ON
+2024-11-06 00:32:52,052 PIN Status for Machine 6 Power ON
+2024-11-06 00:32:52,052 Monitoring thread for Machine 6 started.
+2024-11-06 00:32:52,052 PIN Status for Machine 6 Cycle Start ON
+2024-11-06 00:32:52,053 PIN Status for Machine 6 Mold Close ON
+2024-11-06 00:32:52,553 PIN Status for Machine 6 Power ON
+2024-11-06 00:32:52,553 PIN Status for Machine 6 Cycle Start ON
+2024-11-06 00:32:52,553 PIN Status for Machine 6 Mold Close ON
+2024-11-06 00:33:52,588 Event Status for Machine 2 Inactivek
+2024-11-06 00:33:52,619 Event Status for Machine 1 Inactive
+2024-11-06 00:33:52,635 Event Status for Machine 4 Inactive
+2024-11-06 00:33:52,635 Event Status for Machine 3 Inactivek
+2024-11-06 00:33:52,635 Event Status for Machine 5 Inactivek
+2024-11-06 00:33:53,039 Event Status for Machine 6 Inactivek
